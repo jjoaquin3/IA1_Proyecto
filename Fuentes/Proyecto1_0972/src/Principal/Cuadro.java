@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class Cuadro extends JButton implements ActionListener
 {
     public int fila, columna, tipo, id, distancia;
-    protected Data data;
+    public Data data;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public Cuadro(int fff,int ccc, int ppp, Data ttt)
@@ -49,7 +49,7 @@ public class Cuadro extends JButton implements ActionListener
         this.setIcon(null);
         this.setText(String.valueOf(id));
         this.revalidate();
-    }
+    }        
     
     @Override
     public void actionPerformed(ActionEvent e) 

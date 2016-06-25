@@ -1,5 +1,6 @@
 package Principal;
 
+import IA.Estrella;
 import IA.Data;
 import java.awt.Color;
 import java.awt.Image;
@@ -411,7 +412,8 @@ public class Mapa extends javax.swing.JFrame
     }//GEN-LAST:event_bborrarActionPerformed
 
     private void bcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcalcularActionPerformed
-        // TODO add your handling code here:
+        Estrella a = new Estrella(data);
+        a.algoritmo();      
     }//GEN-LAST:event_bcalcularActionPerformed
 
     private void barbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barbolActionPerformed

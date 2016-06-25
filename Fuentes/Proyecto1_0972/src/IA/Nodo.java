@@ -16,27 +16,47 @@ public class Nodo
     public Cuadro cuadro;
     public ArrayList<Nodo> hijos;    
     //public int id, linea, columna;
-    
+   
     public Nodo(Cuadro ccc, Nodo ppp)
-    {
+    {     
         this.hijos=new ArrayList<>();
         this.cuadro=ccc;
         this.padre=ppp;
-        this.f=0;
-        this.g=0;
-        this.h=0;
-    }
+        this.calcularFGH();        
+    }   
     
-    public void calcularName()
+    public void calcularFGH()
     {
+        this.calcularG();
+        this.calcularH_Cuadrado();
+        //this.calcularH_Diagonal();
+        this.f = this.g + this.h;
+    }        
         
-    }
-    
-    public void calcularFGH(double ggg, double hhh)
+    private void calcularG()
     {
-        this.g = ggg;
-        this.h = hhh;        
-        this.f = ggg+ hhh;
+        if(padre==null)
+            this.g= this.cuadro.distancia;
+        else
+            this.g = this.padre.g + cuadro.distancia;
     }
     
+    private void calcularH_Cuadrado()
+    {
+        double ff = Double.parseDouble(String.valueOf(cuadro.data.fin.fila));
+        double fc = Double.parseDouble(String.valueOf(cuadro.data.fin.columna));        
+        double nf = Double.parseDouble(String.valueOf(cuadro.fila));        
+        double nc = Double.parseDouble(String.valueOf(cuadro.columna));
+        this.h = (Math.abs(ff-nf) + Math.abs(fc - nc))*10;
+    }
+    
+    private void calcularH_Diagonal()
+    {
+        //Pitagoras :D
+        double ff = Double.parseDouble(String.valueOf(cuadro.data.fin.fila));
+        double fc = Double.parseDouble(String.valueOf(cuadro.data.fin.columna));        
+        double nf = Double.parseDouble(String.valueOf(cuadro.fila));        
+        double nc = Double.parseDouble(String.valueOf(cuadro.columna));                
+        this.h = (Math.sqrt(Math.abs(ff-nf) + Math.abs(fc - nc)))*10;
+    }                
 }
