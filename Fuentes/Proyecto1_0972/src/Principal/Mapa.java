@@ -20,7 +20,8 @@ public class Mapa extends javax.swing.JFrame
         data = new Data(17,35);
         this.iniciarPanel();
         this.iniciarOpciones();
-        this.iniciarMatriz();        
+        this.iniciarMatriz();
+        data.upMatriz(matriz);  //actualizo la matriz
     }
     
     private JPanel panelmatriz;

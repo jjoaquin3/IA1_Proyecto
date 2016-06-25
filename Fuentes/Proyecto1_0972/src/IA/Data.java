@@ -11,6 +11,7 @@ public class Data
     public Cuadro inicio, fin;
     public int activo, tamanio, pixeles;
     public String[] rutas;
+    public Cuadro[][] matriz;
 
     public Data(int ttt, int ppp)
     {
@@ -29,6 +30,10 @@ public class Data
         rutas[7]="/Images/Lluvia.png";
         rutas[8]="/Images/Desnivel.png";
         rutas[9]="/Images/Borrar.png";                
-    }             
+    }   
+    
+    public void upMatriz(Cuadro[][] mmm){
+        this.matriz=mmm;
+    }
     
 }

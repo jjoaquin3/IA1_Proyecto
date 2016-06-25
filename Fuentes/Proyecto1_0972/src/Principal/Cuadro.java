@@ -14,16 +14,17 @@ import javax.swing.JOptionPane;
  */
 public class Cuadro extends JButton implements ActionListener
 {
-    public int fila, columna, tipo, id;
+    public int fila, columna, tipo, id, distancia;
     protected Data data;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public Cuadro(int fff,int ccc, int ppp, Data ttt)
     {
-        this.tipo = -1;
+        this.tipo = -1;         //bloqueado
+        this.distancia = 0;     //como esta bloqueado no tiene distancia
+        this.data=ttt;
         this.fila = fff;
         this.columna = ccc;        
-        this.data=ttt;
         this.id = ttt.tamanio*fff+ccc;
         this.setText(String.valueOf(id));
         this.setFocusPainted(false);
@@ -33,12 +34,8 @@ public class Cuadro extends JButton implements ActionListener
         this.updateUI();
     }
         
-    public void establecerIcono(String ruta)
-    {        
-//        File f = new File(ruta);
-//        if(!f.exists())
-//            return;
- 
+    private void establecerIcono(String ruta)
+    {
         this.setText("");
         ImageIcon icono_proceso = (new ImageIcon(getClass().getResource(ruta)));        
         ImageIcon icono_final = new ImageIcon();
@@ -47,54 +44,74 @@ public class Cuadro extends JButton implements ActionListener
         this.updateUI();
     }
     
-    public void borrarIcono()
+    private void borrarIcono()
     {
         this.setIcon(null);
         this.setText(String.valueOf(id));
         this.revalidate();
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) 
     {               
         System.out.println("["+(fila+1)+":"+(columna+1)+"]"); 
         if(data.activo<0)
             return;
-                        
-        if(data.activo==0)
+                                
+        switch (data.activo) 
         {
-            //si voy a poner un inicio
-            if(data.inicio!=null)
-            {
-                JOptionPane.showMessageDialog(null,"Ya existe inicio","Warning",JOptionPane.WARNING_MESSAGE,null);
+            case 0:
+                if(data.inicio!=null)
+                {
+                    JOptionPane.showMessageDialog(null,"Ya existe inicio","Warning",JOptionPane.WARNING_MESSAGE,null);
+                    return;
+                }
+                data.inicio=this;
+                this.distancia=0;
+                break;
+            case 1:
+                if(data.fin!=null)
+                {
+                    JOptionPane.showMessageDialog(null,"Ya existe fin","Warning",JOptionPane.WARNING_MESSAGE,null);
+                    return;
+                }
+                data.fin=this;       
+                this.distancia=0;
+                break;
+            case 2:
+                this.distancia=1;
+                break;
+            case 3:
+                this.distancia=15;
+                break;
+            case 4:
+                this.distancia=20;
+                break;
+            case 5:
+                this.distancia=25;
+                break;
+            case 6:
+                this.distancia=10;
+                break;
+            case 7:
+                this.distancia=5;
+                break;
+            case 8:
+                this.distancia=0;
+                break;
+            case 9:
+                if(this.tipo==0)
+                    this.data.inicio=null;
+                else if(this.tipo==1)
+                    this.data.fin=null;
+                
+                this.tipo = -1;     //ahora esta bloqueado
+                this.distancia=0;   //como esta bloqueado no tiene distancia
+                this.borrarIcono();
                 return;
-            }
-            data.inicio=this;            
-        }
-        else if(data.activo==1)
-        {
-            //si voy a poner un fin
-            if(data.fin!=null)
-            {
-                JOptionPane.showMessageDialog(null,"Ya existe fin","Warning",JOptionPane.WARNING_MESSAGE,null);
+            default:
                 return;
-            }
-            data.fin=this;            
         }
-        else if(data.activo==9)
-        {                   
-            //si voy a poner un borrar
-            
-            //si soy inicio o fin los elimino
-            if(this.tipo==0)
-                this.data.inicio=null;
-            else if(this.tipo==1)
-                this.data.fin=null;
-            
-            this.tipo = -1;
-            this.borrarIcono();
-            return;
-        }        
         this.establecerIcono(data.rutas[data.activo]);
         this.tipo=data.activo;
     }       
