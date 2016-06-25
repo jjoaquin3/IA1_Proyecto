@@ -13,9 +13,7 @@ import javax.swing.JPanel;
  * @author Joaquin
  */
 public class Mapa extends javax.swing.JFrame 
-{
-    
-
+{   
     public Mapa() 
     {
         initComponents();
@@ -65,7 +63,7 @@ public class Mapa extends javax.swing.JFrame
     }
         
     private void iniciarOpciones()
-    {                
+    {        
         this.binicio.setIcon(this.obtenerIcono(data.rutas[0], 80, 80));
         this.bfinal.setIcon(this.obtenerIcono(data.rutas[1], 80, 80));
         this.bcamino.setIcon(this.obtenerIcono("/Images/Camino.png", 80, 80));                
@@ -330,7 +328,7 @@ public class Mapa extends javax.swing.JFrame
                     .addComponent(bdesnivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bborrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
-                .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bcalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(barbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
