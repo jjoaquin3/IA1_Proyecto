@@ -113,17 +113,20 @@ public class Mapa extends javax.swing.JFrame
         blluvia = new javax.swing.JButton();
         bdesnivel = new javax.swing.JButton();
         bborrar = new javax.swing.JButton();
+        bcalcular = new javax.swing.JButton();
+        barbol = new javax.swing.JButton();
+        bcorrer = new javax.swing.JButton();
+        bparar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mapa");
 
-        panelprincipal.setBackground(new java.awt.Color(153, 153, 255));
+        panelprincipal.setBackground(new java.awt.Color(204, 204, 204));
 
         panelopciones.setBackground(new java.awt.Color(153, 153, 153));
         panelopciones.setOpaque(false);
         panelopciones.setPreferredSize(new java.awt.Dimension(235, 594));
 
-        binicio.setBackground(new java.awt.Color(255, 255, 255));
         binicio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         binicio.setBorderPainted(false);
         binicio.setContentAreaFilled(false);
@@ -224,6 +227,50 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bcalcular.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        bcalcular.setForeground(new java.awt.Color(204, 204, 0));
+        bcalcular.setText("A*");
+        bcalcular.setContentAreaFilled(false);
+        bcalcular.setPreferredSize(new java.awt.Dimension(80, 31));
+        bcalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcalcularActionPerformed(evt);
+            }
+        });
+
+        barbol.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        barbol.setForeground(new java.awt.Color(204, 204, 0));
+        barbol.setText("Arbol");
+        barbol.setContentAreaFilled(false);
+        barbol.setPreferredSize(new java.awt.Dimension(80, 31));
+        barbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barbolActionPerformed(evt);
+            }
+        });
+
+        bcorrer.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        bcorrer.setForeground(new java.awt.Color(0, 0, 153));
+        bcorrer.setText("Correr");
+        bcorrer.setContentAreaFilled(false);
+        bcorrer.setPreferredSize(new java.awt.Dimension(80, 31));
+        bcorrer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcorrerActionPerformed(evt);
+            }
+        });
+
+        bparar.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        bparar.setForeground(new java.awt.Color(153, 0, 0));
+        bparar.setText("Parar");
+        bparar.setContentAreaFilled(false);
+        bparar.setPreferredSize(new java.awt.Dimension(80, 31));
+        bparar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bpararActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelopcionesLayout = new javax.swing.GroupLayout(panelopciones);
         panelopciones.setLayout(panelopcionesLayout);
         panelopcionesLayout.setHorizontalGroup(
@@ -231,10 +278,6 @@ public class Mapa extends javax.swing.JFrame
             .addGroup(panelopcionesLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelopcionesLayout.createSequentialGroup()
-                        .addComponent(bdesnivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(bborrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelopcionesLayout.createSequentialGroup()
                         .addComponent(bescolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,7 +293,17 @@ public class Mapa extends javax.swing.JFrame
                     .addGroup(panelopcionesLayout.createSequentialGroup()
                         .addComponent(bcamino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelopcionesLayout.createSequentialGroup()
+                        .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(bcorrer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bdesnivel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bcalcular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bborrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(barbol, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bparar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(21, 21, 21))
         );
         panelopcionesLayout.setVerticalGroup(
@@ -276,7 +329,15 @@ public class Mapa extends javax.swing.JFrame
                 .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bdesnivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bborrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bcalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(barbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(panelopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bcorrer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bparar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelprincipalLayout = new javax.swing.GroupLayout(panelprincipal);
@@ -349,6 +410,22 @@ public class Mapa extends javax.swing.JFrame
     private void bborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bborrarActionPerformed
         data.activo=9;
     }//GEN-LAST:event_bborrarActionPerformed
+
+    private void bcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcalcularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bcalcularActionPerformed
+
+    private void barbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barbolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_barbolActionPerformed
+
+    private void bcorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcorrerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bcorrerActionPerformed
+
+    private void bpararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpararActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bpararActionPerformed
     
 //    public static void main(String args[]) 
 //    {
@@ -374,13 +451,17 @@ public class Mapa extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton baccidente;
+    private javax.swing.JButton barbol;
     private javax.swing.JButton bborrar;
+    private javax.swing.JButton bcalcular;
     private javax.swing.JButton bcamino;
+    private javax.swing.JButton bcorrer;
     private javax.swing.JButton bdesnivel;
     private javax.swing.JButton bescolar;
     private javax.swing.JButton bfinal;
     private javax.swing.JButton binicio;
     private javax.swing.JButton blluvia;
+    private javax.swing.JButton bparar;
     private javax.swing.JButton btrabajo;
     private javax.swing.JButton btrafico;
     private javax.swing.JPanel panelopciones;
