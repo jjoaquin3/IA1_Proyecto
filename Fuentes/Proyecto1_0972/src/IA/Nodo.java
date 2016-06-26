@@ -1,7 +1,7 @@
 package IA;
 
 import Principal.Cuadro;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,13 +15,15 @@ public class Nodo
     public boolean solucion;
     public String name;
     public Cuadro cuadro;
-    public ArrayList<Nodo> hijos;    
+    //public ArrayList<Nodo> hijos;    
+    public LinkedList<Nodo> hijos;
     //public int id, linea, columna;
    
     public Nodo(Cuadro ccc, Nodo ppp)
     {     
         this.solucion=false;
-        this.hijos=new ArrayList<>();
+        //this.hijos=new ArrayList<>();
+        this.hijos = new LinkedList<>();
         this.cuadro=ccc;
         this.padre=ppp;
         this.calcularFGH();        

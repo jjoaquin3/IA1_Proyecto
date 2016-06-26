@@ -60,12 +60,12 @@ public class Cuadro extends JButton implements ActionListener
                                       
         if(this.tipo==0)
         {
-            if(data.activo>1)
+            if(data.activo>-1)
                 this.data.inicio=null;  
         }
         else if(this.tipo==1)
         {
-            if(data.activo>1 )
+            if(data.activo>-1 )
                 this.data.fin=null;  
         }
         
