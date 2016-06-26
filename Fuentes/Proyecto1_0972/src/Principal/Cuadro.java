@@ -57,7 +57,18 @@ public class Cuadro extends JButton implements ActionListener
         System.out.println("["+(fila+1)+":"+(columna+1)+"]"); 
         if(data.activo<0)
             return;
-                                
+                                      
+        if(this.tipo==0)
+        {
+            if(data.activo>1)
+                this.data.inicio=null;  
+        }
+        else if(this.tipo==1)
+        {
+            if(data.activo>1 )
+                this.data.fin=null;  
+        }
+        
         switch (data.activo) 
         {
             case 0:
@@ -100,19 +111,18 @@ public class Cuadro extends JButton implements ActionListener
                 this.distancia=0;
                 break;
             case 9:
-                if(this.tipo==0)
-                    this.data.inicio=null;
-                else if(this.tipo==1)
-                    this.data.fin=null;
-                
                 this.tipo = -1;     //ahora esta bloqueado
                 this.distancia=0;   //como esta bloqueado no tiene distancia
                 this.borrarIcono();
                 return;
             default:
                 return;
-        }
+        }        
+        
         this.establecerIcono(data.rutas[data.activo]);
         this.tipo=data.activo;
+        
+        
+        
     }       
 }

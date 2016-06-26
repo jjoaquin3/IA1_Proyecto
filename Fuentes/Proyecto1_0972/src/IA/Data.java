@@ -1,6 +1,7 @@
 package IA;
 
 import Principal.Cuadro;
+import java.util.LinkedList;
 
 /**
  *
@@ -12,6 +13,7 @@ public class Data
     public int activo, tamanio, pixeles;
     public String[] rutas;
     public Cuadro[][] matriz;
+    public LinkedList<Nodo> solucion;
 
     public Data(int ttt, int ppp)
     {

@@ -36,15 +36,31 @@ public class Estrella {
             
             if (esFinal(actual)) 
             {
-                System.out.println("solucion");
+                System.out.println("solucion");    
+                this.operarSolucion(actual);
                 break;
             }            
             operarSucesores(actual);
         } 
         while (abiertos.size() != 0);
         System.out.println("Termino :D");
+        Graficador g = new Graficador();
+        g.graficarAST(inicio, "Busqueda");
     }
 
+    private void operarSolucion(Nodo solucion)
+    {
+        data.solucion=new LinkedList<>();
+        
+        Nodo temporal = solucion;
+        while(temporal!=null)
+        {
+            temporal.solucion=true;
+            data.solucion.addFirst(temporal);
+            temporal=temporal.padre;
+        }
+    }    
+    
     Nodo igual;
     private void operarSucesores(Nodo actual) 
     {
@@ -66,7 +82,9 @@ public class Estrella {
             double g_sucesor = nodo_sucesor.g;
 
             //g en otro cuadro es mejor que este sucesor?
-            if (g_encontrado < g_sucesor) {
+            if (g_encontrado < g_sucesor) 
+            {
+                actual.hijos.add(nodo_sucesor);
                 igual.padre = actual;
                 igual.calcularFGH();
             }

@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 public class Graficador 
 {
     String separador=System.getProperty("file.separator");
-    String rescritorio = System.getProperty("user.home")+separador+"SalidasDOT";
+    String rutaSalidas = System.getProperty("user.home")+separador+"SalidasDOT";
     public Graficador()
     {        
-        File folder = new File(rescritorio);
+        File folder = new File(rutaSalidas);
         if(!folder.exists())
             folder.mkdir();           
     }
@@ -35,9 +35,9 @@ public class Graficador
         String[] cmd = new String[5];
         cmd[0] = "dot";     //cmd[0] = "dot.exe"; //-----> para windows
         cmd[1] = "-Tjpg";   //extencion de la imagen 
-        cmd[2] = rescritorio+separador+"SalidasDOT"+separador+nombre+".txt";    //ruta del dot
+        cmd[2] = rutaSalidas+separador+nombre+".txt";    //ruta del dot
         cmd[3] = "-o";      //saber
-        cmd[4] = rescritorio+separador+"SalidasDOT"+separador+nombre+".jpg";    //ruta de la imagen
+        cmd[4] = rutaSalidas+separador+nombre+".jpg";    //ruta de la imagen
         this.creararchivo(cmd[2],graphviz.toString());                
         Runtime rt = Runtime.getRuntime();
 
@@ -51,8 +51,11 @@ public class Graficador
     }
             
     private void listarNodos(Nodo praiz, StringBuffer graphviz)
-    {        
-        graphviz.append("node").append(contador).append("[label=\"").append(praiz.name).append("\"];\n");
+    {
+        if(praiz.solucion)        
+            graphviz.append("node").append(contador).append("[label=\"").append(praiz.calcularNombre()).append("\", fillcolor=\"limegreen\"];\n");        
+        else
+            graphviz.append("node").append(contador).append("[label=\"").append(praiz.calcularNombre()).append("\"];\n");
         praiz.id=contador;  
         contador++;
         for(Nodo temp:praiz.hijos)
@@ -83,4 +86,23 @@ public class Graficador
             Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
+    
+//    public synchronized void creararchivo(String pfichero,String pcontenido)
+//    {   
+//        FileWriter archivo = null;
+//   
+//        try{archivo = new FileWriter(pfichero);} 
+//        catch (IOException ex) 
+//        {Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);}
+//
+//        File a = new File(pfichero);        
+//        if (!a.exists()){return;}   
+//        
+//        try(PrintWriter printwriter = new PrintWriter(archivo)) 
+//        {
+//            printwriter.print(pcontenido);
+//            printwriter.close();
+//        }
+//    }
+     
 }

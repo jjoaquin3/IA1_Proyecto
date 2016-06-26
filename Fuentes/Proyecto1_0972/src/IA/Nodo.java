@@ -12,6 +12,7 @@ public class Nodo
     public Nodo padre;
     public int id;
     public double f,g,h;
+    public boolean solucion;
     public String name;
     public Cuadro cuadro;
     public ArrayList<Nodo> hijos;    
@@ -19,6 +20,7 @@ public class Nodo
    
     public Nodo(Cuadro ccc, Nodo ppp)
     {     
+        this.solucion=false;
         this.hijos=new ArrayList<>();
         this.cuadro=ccc;
         this.padre=ppp;
@@ -39,6 +41,15 @@ public class Nodo
             this.g= this.cuadro.distancia;
         else
             this.g = this.padre.g + cuadro.distancia;
+    }
+    
+    public String calcularNombre()
+    {
+        StringBuilder reto = new StringBuilder(this.cuadro.id+"\n");
+        reto.append("g(n) = ").append(this.g).append("\n");
+        reto.append("h(n) = ").append(this.h).append("\n");
+        reto.append("f(n) = ").append(this.f);
+        return reto.toString();
     }
     
     private void calcularH_Cuadrado()
