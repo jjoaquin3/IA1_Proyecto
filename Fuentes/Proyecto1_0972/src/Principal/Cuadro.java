@@ -2,6 +2,7 @@ package Principal;
 
 import IA.Data;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -18,30 +19,33 @@ public class Cuadro extends JButton implements ActionListener
     public Data data;
 
     @SuppressWarnings("LeakingThisInConstructor")
-    public Cuadro(int fff,int ccc, int ppp, Data ttt)
+    public Cuadro(int fff,int ccc, Data ttt)
     {
-        this.tipo = -1;         //bloqueado
-        this.distancia = 0;     //como esta bloqueado no tiene distancia
+        this.tipo = -1;         //bloqueado        
         this.data=ttt;
         this.fila = fff;
         this.columna = ccc;        
-        this.id = ttt.tamanio*fff+ccc;
+        this.distancia = 0;     //como esta bloqueado no tiene distancia
+        this.id = ttt.tamanio*fff+ccc;        
+        this.setFocusPainted(false);        
         this.setText(String.valueOf(id));
-        this.setFocusPainted(false);
+        this.setContentAreaFilled(false);
+        this.setMargin(new Insets(1,1,1,1));
+        this.setFont(new java.awt.Font("Comic Sans MS", 1, 9));       
+        this.setBounds(columna*data.pixeles,fila*data.pixeles,data.pixeles,data.pixeles);        
         this.addActionListener(this);
-        this.setContentAreaFilled(false);        
-        this.setBounds(columna*ppp,fila*ppp,ppp,ppp);
         this.updateUI();
+        
     }
         
     private void establecerIcono(String ruta)
     {
         this.setText("");
-        ImageIcon icono_proceso = (new ImageIcon(getClass().getResource(ruta)));        
+        ImageIcon icono_proceso = (new ImageIcon(getClass().getResource(ruta)));
         ImageIcon icono_final = new ImageIcon();
-        icono_final.setImage(icono_proceso.getImage().getScaledInstance(data.pixeles, data.pixeles, Image.SCALE_DEFAULT));        
+        icono_final.setImage(icono_proceso.getImage().getScaledInstance(data.pixeles, data.pixeles, Image.SCALE_DEFAULT));
         this.setIcon(icono_final);
-        this.updateUI();
+        this.updateUI();      
     }
     
     private void borrarIcono()
@@ -51,24 +55,23 @@ public class Cuadro extends JButton implements ActionListener
         this.revalidate();
     }        
     
-    @Override
-    public void actionPerformed(ActionEvent e) 
-    {               
-        System.out.println("["+(fila+1)+":"+(columna+1)+"]"); 
-        if(data.activo<0)
-            return;
-                                      
-        if(this.tipo==0)
-        {
-            if(data.activo>-1)
-                this.data.inicio=null;  
-        }
-        else if(this.tipo==1)
-        {
-            if(data.activo>-1 )
-                this.data.fin=null;  
-        }
-        
+    public void upCamino()
+    {
+        this.distancia=2;
+        this.establecerIcono(data.rutas[2]);
+        this.tipo=2;
+    }
+    
+    public void upInicio()
+    {
+        data.inicio=this;
+        this.distancia=0;
+        this.establecerIcono(data.rutas[0]);
+        this.tipo=0;
+    }
+    
+    public void accionActualizar()
+    {
         switch (data.activo) 
         {
             case 0:
@@ -108,7 +111,7 @@ public class Cuadro extends JButton implements ActionListener
                 this.distancia=5;
                 break;
             case 8:
-                this.distancia=0;
+                this.distancia=1;
                 break;
             case 9:
                 this.tipo = -1;     //ahora esta bloqueado
@@ -117,12 +120,28 @@ public class Cuadro extends JButton implements ActionListener
                 return;
             default:
                 return;
-        }        
-        
+        }                
         this.establecerIcono(data.rutas[data.activo]);
         this.tipo=data.activo;
-        
-        
-        
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {               
+        System.out.println("["+(fila+1)+":"+(columna+1)+"]"); 
+        if(data.activo<0)
+            return;
+                                      
+        if(this.tipo==0)
+        {
+            if(data.activo>-1)
+                this.data.inicio=null;  
+        }
+        else if(this.tipo==1)
+        {
+            if(data.activo>-1 )
+                this.data.fin=null;  
+        }
+        this.accionActualizar();
     }       
 }

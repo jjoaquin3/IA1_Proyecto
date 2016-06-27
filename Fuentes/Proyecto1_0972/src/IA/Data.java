@@ -14,6 +14,7 @@ public class Data
     public String[] rutas;
     public Cuadro[][] matriz;
     public LinkedList<Nodo> solucion;
+    public Nodo raiz;
 
     public Data(int ttt, int ppp)
     {
@@ -25,17 +26,24 @@ public class Data
         rutas[0]="/Images/Inicio.png";
         rutas[1]="/Images/Final.png";        
         rutas[2]="/Images/Asfalto.png";
-        rutas[3]="/Images/Trafico.png";
+        rutas[3]="/Images/Trafico3.png";
         rutas[4]="/Images/Accidente.png";        
         rutas[5]="/Images/Trabajo.png";
         rutas[6]="/Images/Escolar.png";
         rutas[7]="/Images/Lluvia.png";
         rutas[8]="/Images/Desnivel.png";
-        rutas[9]="/Images/Borrar.png";                
+        rutas[9]="/Images/Borrar.png";       
+        this.solucion=new LinkedList<>();
     }   
     
     public void upMatriz(Cuadro[][] mmm){
         this.matriz=mmm;
+    }
+    
+    public void graficarArbol()
+    {
+        Graficador g = new Graficador();
+        g.graficarAST(raiz, "Busqueda");        
     }
     
 }

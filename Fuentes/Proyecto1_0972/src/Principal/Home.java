@@ -155,7 +155,7 @@ public class Home extends javax.swing.JFrame {
 
     private void bacercadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bacercadeActionPerformed
         JOptionPane.showMessageDialog(null,"José Joaquin Cacao Chub\nCarnet: 2012-12577\n"
-                + "Guatemala Junio de 2016","Acerca de",1);
+                + "Guatemala Junio de 2016","Acerca de",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_bacercadeActionPerformed
     
 //    public static void main(String args[]) 

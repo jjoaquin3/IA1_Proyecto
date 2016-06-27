@@ -5,113 +5,94 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author joaquin
  */
-public class Estrella {
-
-    public LinkedList<Nodo> abiertos;
-    public LinkedList<Nodo> cerrados;
+public class Estrella
+{
+    public LinkedList<Nodo> abiertos, cerrados;
     public Data data;
 
-    public Estrella(Data ddd) {
+    public Estrella(Data ddd)
+    {
         this.data = ddd;
     }
 
-    public void algoritmo() {
-        //Iniciar lista de abiertos y cerrados
-        this.abiertos = new LinkedList<>();
-        this.cerrados = new LinkedList<>();
-
-        //meter inicio a lista de abiertos
-        Nodo inicio = new Nodo(data.inicio, null);
-        this.abiertos.add(inicio);
-
+    public void algoritmo()
+    {        
+        this.abiertos = new LinkedList<>(); //Lista de nodos posibles a evaluar
+        this.cerrados = new LinkedList<>(); //Lista de nodos evaluados
+        this.data.solucion=new LinkedList<>();  //Lista de nodos solucion       
+        Nodo inicio = new Nodo(data.inicio, null);  
+        this.data.raiz = inicio;        
+        this.abiertos.add(inicio);          //Nodo inicial a lista de abiertos
+        
         do 
         {            
             this.ordenarAbiertos();         //ordenar por valor de F            
             Nodo actual = abiertos.pop();   //sacar el de menor valor F            
             cerrados.addLast(actual);       //mover a cerrados
             
-            if (esFinal(actual)) 
+            if (esFinal(actual))            //nodo actual es el final
             {
-                System.out.println("solucion");    
-                this.operarSolucion(actual);
+                this.operarSolucion(actual);    //actualizo lista soluciones
                 break;
             }            
-            operarSucesores(actual);
+            operarSucesores(actual);        //creo sucesores del nodo actual
         } 
         while (abiertos.size() != 0);
-        System.out.println("Termino :D");
-        Graficador g = new Graficador();
-        g.graficarAST(inicio, "Busqueda");
+        System.out.println("------------> Analisis Terminado");
+        
+        if(this.data.solucion.size()==0)
+            JOptionPane.showMessageDialog(null,"Analisis terminado, no existen caminos a tomar","Proyecto IA1",JOptionPane.ERROR_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null,"Analisis terminado con exito","Proyecto IA1",JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void operarSolucion(Nodo solucion)
     {
-        data.solucion=new LinkedList<>();
-        
-        Nodo temporal = solucion;
+        Nodo temporal = solucion;           //llenar la lista de soluciones
         while(temporal!=null)
         {
             temporal.solucion=true;
             data.solucion.addFirst(temporal);
             temporal=temporal.padre;
         }
+        System.out.println("------------> Ruta solucion establecida");
     }    
     
     Nodo igual;
-    private void operarSucesores(Nodo actual) 
+    private void operarSucesores(Nodo actual)
     {
         ArrayList<Nodo> sucesores = this.calcularSucesores(actual);        
-        for (Nodo nodo_sucesor : sucesores) //si es nulo iterar de nuevo
+        for (Nodo nodo_sucesor : sucesores)             //por cada sucesor encontrado
         {            
-            if (nodo_sucesor == null)
+            if (nodo_sucesor == null)                   //si es nulo itero de nuevo
                 continue;
-
+            //sucesor no en lista de abiertos
             if (this.existeAbiertos(nodo_sucesor)==false) 
             {
-                nodo_sucesor.padre=actual;
                 nodo_sucesor.calcularFGH();
-                actual.hijos.add(nodo_sucesor);
-                this.abiertos.addFirst(nodo_sucesor);                
+                actual.hijos.add(nodo_sucesor);         //agregar hijo como hijo de actual
+                this.abiertos.addFirst(nodo_sucesor);   //agregar a lista de abiertos sucesor
                 continue;
             }
-
-            //si esta en abiertos, //valor de costo G para el nodo encontrado igual
-            double g_encontrado = igual.g;
-            double g_sucesor = nodo_sucesor.g;
-
-            //g en otro cuadro es mejor que este sucesor?
-            if (g_encontrado < g_sucesor) 
+            //sucesor en lista de abiertos
+            if (igual.g < nodo_sucesor.g)               //g en otro cuadro es mejor que este sucesor?
             {                                   
-                //this.actualizarPadre(actual, igual);            
-                //igual.padre.hijos.remove(igual);
-                actual.hijos.add(this.copiarIgual(igual, actual));    
-                igual.calcularFGH();
+                actual.hijos.add(new Nodo(igual.cuadro, actual));   //actualizar arbol
+                igual.calcularFGH();                    
             }
         }
     }
     
-    private Nodo copiarIgual(Nodo igual, Nodo padre)
-    {
-        Nodo reto = new Nodo(igual.cuadro, padre);        
-        return reto;
-    }
-
-    private void actualizarPadre(Nodo padre, Nodo hijo)
-    {
-        hijo.padre.hijos.remove(hijo);
-        hijo.padre=padre;
-        padre.hijos.add(hijo);        
-    }
-    
-    private void ordenarAbiertos() 
+    private void ordenarAbiertos()
     {
         if (abiertos.size() < 2)
-            return;
+            return;        
         Collections.sort(abiertos, new Comparator<Nodo>() 
         {
             @Override
@@ -122,7 +103,7 @@ public class Estrella {
         });
     }
     
-    private boolean esFinal(Nodo actual) 
+    private boolean esFinal(Nodo actual)
     {
         if (actual.cuadro.fila == data.fin.fila) 
         {
@@ -132,7 +113,7 @@ public class Estrella {
         return false;
     }
 
-    private boolean existeAbiertos(Nodo sucesor) 
+    private boolean existeAbiertos(Nodo sucesor)
     {
         this.igual=null;
         for (Nodo item : abiertos) 
@@ -149,7 +130,7 @@ public class Estrella {
         return false;
     }
 
-    private boolean existeCerrados(Nodo sucesor) 
+    private boolean existeCerrados(Nodo sucesor)
     {
         for (Nodo item : cerrados) 
         {
@@ -162,7 +143,7 @@ public class Estrella {
         return false;
     }    
 
-    private ArrayList<Nodo> calcularSucesores(Nodo padre) 
+    private ArrayList<Nodo> calcularSucesores(Nodo padre)
     {
         ArrayList<Nodo> sucesores = new ArrayList<>();
         sucesores.add(movArriba(padre));
@@ -176,35 +157,31 @@ public class Estrella {
         return sucesores;
     }
 
-    private Nodo movArriba(Nodo padre) 
+    private Nodo movArriba(Nodo padre)
     {
         int fila = padre.cuadro.fila + 1;
         if (fila > data.tamanio-1) 
-            return null;
-        
+            return null;        
         Cuadro cuadro = data.matriz[fila][padre.cuadro.columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
 
-    private Nodo movAbajo(Nodo padre) 
+    private Nodo movAbajo(Nodo padre)
     {
         int fila = padre.cuadro.fila - 1;
         if (fila < 0) 
-            return null;
-        
+            return null;        
         Cuadro cuadro = data.matriz[fila][padre.cuadro.columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
@@ -214,42 +191,37 @@ public class Estrella {
     {
         int columna = padre.cuadro.columna + 1;
         if (columna > data.tamanio-1) 
-            return null;
-        
+            return null;        
         Cuadro cuadro = data.matriz[padre.cuadro.fila][columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
 
-    private Nodo movIzquierda(Nodo padre) 
+    private Nodo movIzquierda(Nodo padre)
     {
         int columna = padre.cuadro.columna - 1;
         if (columna < 0) 
-            return null;
-        
+            return null;        
         Cuadro cuadro = data.matriz[padre.cuadro.fila][columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
     
-    private Nodo movArribaDerecha(Nodo padre) 
+    private Nodo movArribaDerecha(Nodo padre)
     {                        
         int fila = padre.cuadro.fila + 1;
         if (fila > data.tamanio-1) 
-            return null;
-        
+            return null;        
         int columna = padre.cuadro.columna + 1;
         if (columna > data.tamanio-1) 
             return null;
@@ -257,20 +229,18 @@ public class Estrella {
         Cuadro cuadro = data.matriz[fila][columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
     
-    private Nodo movAbajoDerecha(Nodo padre) 
+    private Nodo movAbajoDerecha(Nodo padre)
     {
         int fila = padre.cuadro.fila - 1;
         if (fila < 0) 
-            return null;
-        
+            return null;        
         int columna = padre.cuadro.columna + 1;
         if(columna > data.tamanio-1)
             return null;
@@ -278,20 +248,18 @@ public class Estrella {
         Cuadro cuadro = data.matriz[fila][columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
     
-    private Nodo movArribaIzquierda(Nodo padre) 
+    private Nodo movArribaIzquierda(Nodo padre)
     {                        
         int fila = padre.cuadro.fila + 1;
         if (fila > data.tamanio-1)
-            return null;
-        
+            return null;        
         int columna = padre.cuadro.columna - 1;
         if (columna < 0)
             return null;
@@ -299,33 +267,30 @@ public class Estrella {
         Cuadro cuadro = data.matriz[fila][columna];
         if (cuadro.tipo == -1)
             return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
     
-    private Nodo movAbajoIzquierda(Nodo padre) 
+    private Nodo movAbajoIzquierda(Nodo padre)
     {
         int fila = padre.cuadro.fila - 1;
         if (fila < 0) 
-            return null;
-        
+            return null;                
         int columna = padre.cuadro.columna - 1;
         if (columna <0) 
             return null;
         
         Cuadro cuadro = data.matriz[fila][columna];
         if (cuadro.tipo == -1)
-            return null;
-        //hay un camino :D 
-        //existe este cuadro en cerrados?
-        Nodo retorno = new Nodo(cuadro, padre);
+            return null;        
+        
+        Nodo retorno = new Nodo(cuadro, padre); //existe en cerrados?
         if (this.existeCerrados(retorno))
             return null;
         return retorno;
     }
-
+    
 }

@@ -1,7 +1,9 @@
 package Principal;
 
+import IA.Animar;
 import IA.Estrella;
 import IA.Data;
+import IA.Graficador;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -46,7 +48,7 @@ public class Mapa extends javax.swing.JFrame
         this.fondodefault=new JLabel();        
         this.fondodefault.setLocation(0, 0);
         this.fondodefault.setSize(data.tamanio*data.pixeles,data.tamanio*data.pixeles);
-        //this.fondodefault.setIcon(new ImageIcon(getClass().getResource("/Images/Hierba.jpg"))); 
+        //this.fondodefault.setIcon(new ImageIcon(getClass().getResource("/Images/Default.jpg"))); 
         this.panelmatriz.add(fondodefault);                
     }
     
@@ -57,7 +59,7 @@ public class Mapa extends javax.swing.JFrame
         {
             for (int c = 0; c < this.data.tamanio; c++) 
             {
-                matriz[f][c] = new Cuadro(f,c, data.pixeles, data);
+                matriz[f][c] = new Cuadro(f,c, data);
                 fondodefault.add(matriz[f][c]);
             }
         }
@@ -68,7 +70,7 @@ public class Mapa extends javax.swing.JFrame
     {        
         this.binicio.setIcon(this.obtenerIcono(data.rutas[0], 80, 80));
         this.bfinal.setIcon(this.obtenerIcono(data.rutas[1], 80, 80));
-        this.bcamino.setIcon(this.obtenerIcono("/Images/Camino.png", 80, 80));                
+        this.bcamino.setIcon(this.obtenerIcono(data.rutas[2], 80, 80));                
         this.btrafico.setIcon(this.obtenerIcono(data.rutas[3], 80, 80));        
         this.baccidente.setIcon(this.obtenerIcono(data.rutas[4], 80, 80));
         this.btrabajo.setIcon(this.obtenerIcono(data.rutas[5], 80, 80));
@@ -121,15 +123,20 @@ public class Mapa extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mapa");
 
-        panelprincipal.setBackground(new java.awt.Color(204, 204, 204));
+        panelprincipal.setBackground(new java.awt.Color(0, 0, 0));
+        panelprincipal.setForeground(new java.awt.Color(255, 255, 255));
 
-        panelopciones.setBackground(new java.awt.Color(153, 153, 153));
+        panelopciones.setBackground(new java.awt.Color(255, 255, 255));
         panelopciones.setOpaque(false);
         panelopciones.setPreferredSize(new java.awt.Dimension(235, 594));
 
+        binicio.setBackground(new java.awt.Color(255, 255, 255));
+        binicio.setToolTipText("");
         binicio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        binicio.setBorderPainted(false);
         binicio.setContentAreaFilled(false);
+        binicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        binicio.setName(""); // NOI18N
+        binicio.setOpaque(false);
         binicio.setPreferredSize(new java.awt.Dimension(80, 80));
         binicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,9 +144,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bfinal.setBackground(new java.awt.Color(255, 255, 255));
+        bfinal.setToolTipText("");
         bfinal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bfinal.setBorderPainted(false);
         bfinal.setContentAreaFilled(false);
+        bfinal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bfinal.setName(""); // NOI18N
+        bfinal.setOpaque(false);
         bfinal.setPreferredSize(new java.awt.Dimension(80, 80));
         bfinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,9 +158,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bcamino.setBackground(new java.awt.Color(255, 255, 255));
+        bcamino.setToolTipText("");
         bcamino.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bcamino.setBorderPainted(false);
         bcamino.setContentAreaFilled(false);
+        bcamino.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bcamino.setName(""); // NOI18N
+        bcamino.setOpaque(false);
         bcamino.setPreferredSize(new java.awt.Dimension(80, 80));
         bcamino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,9 +172,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        btrafico.setBackground(new java.awt.Color(255, 255, 255));
+        btrafico.setToolTipText("");
         btrafico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btrafico.setBorderPainted(false);
         btrafico.setContentAreaFilled(false);
+        btrafico.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btrafico.setName(""); // NOI18N
+        btrafico.setOpaque(false);
         btrafico.setPreferredSize(new java.awt.Dimension(80, 80));
         btrafico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,9 +186,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        baccidente.setBackground(new java.awt.Color(255, 255, 255));
+        baccidente.setToolTipText("");
         baccidente.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        baccidente.setBorderPainted(false);
         baccidente.setContentAreaFilled(false);
+        baccidente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        baccidente.setName(""); // NOI18N
+        baccidente.setOpaque(false);
         baccidente.setPreferredSize(new java.awt.Dimension(80, 80));
         baccidente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,9 +200,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        btrabajo.setBackground(new java.awt.Color(255, 255, 255));
+        btrabajo.setToolTipText("");
         btrabajo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btrabajo.setBorderPainted(false);
         btrabajo.setContentAreaFilled(false);
+        btrabajo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btrabajo.setName(""); // NOI18N
+        btrabajo.setOpaque(false);
         btrabajo.setPreferredSize(new java.awt.Dimension(80, 80));
         btrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,9 +214,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bescolar.setBackground(new java.awt.Color(255, 255, 255));
+        bescolar.setToolTipText("");
         bescolar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bescolar.setBorderPainted(false);
         bescolar.setContentAreaFilled(false);
+        bescolar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bescolar.setName(""); // NOI18N
+        bescolar.setOpaque(false);
         bescolar.setPreferredSize(new java.awt.Dimension(80, 80));
         bescolar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,9 +228,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        blluvia.setBackground(new java.awt.Color(255, 255, 255));
+        blluvia.setToolTipText("");
         blluvia.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        blluvia.setBorderPainted(false);
         blluvia.setContentAreaFilled(false);
+        blluvia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        blluvia.setName(""); // NOI18N
+        blluvia.setOpaque(false);
         blluvia.setPreferredSize(new java.awt.Dimension(80, 80));
         blluvia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,9 +242,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bdesnivel.setBackground(new java.awt.Color(255, 255, 255));
+        bdesnivel.setToolTipText("");
         bdesnivel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bdesnivel.setBorderPainted(false);
         bdesnivel.setContentAreaFilled(false);
+        bdesnivel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bdesnivel.setName(""); // NOI18N
+        bdesnivel.setOpaque(false);
         bdesnivel.setPreferredSize(new java.awt.Dimension(80, 80));
         bdesnivel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,9 +256,13 @@ public class Mapa extends javax.swing.JFrame
             }
         });
 
+        bborrar.setBackground(new java.awt.Color(255, 255, 255));
+        bborrar.setToolTipText("");
         bborrar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bborrar.setBorderPainted(false);
         bborrar.setContentAreaFilled(false);
+        bborrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bborrar.setName(""); // NOI18N
+        bborrar.setOpaque(false);
         bborrar.setPreferredSize(new java.awt.Dimension(80, 80));
         bborrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,20 +455,42 @@ public class Mapa extends javax.swing.JFrame
     }//GEN-LAST:event_bborrarActionPerformed
 
     private void bcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcalcularActionPerformed
+        if(data.inicio== null || data.fin==null)
+            return;
+        
         Estrella a = new Estrella(data);
         a.algoritmo();      
     }//GEN-LAST:event_bcalcularActionPerformed
 
     private void barbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barbolActionPerformed
-        // TODO add your handling code here:
+        if(this.data.inicio!=null)
+        {
+            Graficador g = new Graficador();
+            g.graficarAST(this.data.raiz, "ArbolEstrella");
+        }
     }//GEN-LAST:event_barbolActionPerformed
 
+    Animar ani;
     private void bcorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcorrerActionPerformed
-        // TODO add your handling code here:
+        this.bcalcularActionPerformed(evt);
+        
+        if(data.solucion==null)
+            return;                
+        if(data.solucion.size()==0)
+            return;
+        
+        ani =new Animar();
+        ani.data = this.data;
+        ani.start();
     }//GEN-LAST:event_bcorrerActionPerformed
 
     private void bpararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpararActionPerformed
-        // TODO add your handling code here:
+        if(data.solucion==null)
+            return;        
+        if(data.solucion.size()==0)
+            return;
+        if(ani!=null)
+            ani.terminar=true;
     }//GEN-LAST:event_bpararActionPerformed
     
 //    public static void main(String args[]) 

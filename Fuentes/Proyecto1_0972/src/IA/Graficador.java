@@ -1,5 +1,6 @@
 package IA;
 
+import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -24,10 +25,9 @@ public class Graficador
     
     int contador;
     //public StringBuffer graphviz;
-    public void graficarAST(Nodo raiz, String nombre)
-    {        
+    public void graficarAST(Nodo raiz, String nombre){        
         contador=0;
-        StringBuffer graphviz = new StringBuffer("\ndigraph G {\r\nnode [shape=doublecircle, style=filled, color=khaki1, fontcolor=black];\n");
+        StringBuffer graphviz = new StringBuffer("\ndigraph G {\r\nnode [shape=\"doublecircle\", style=\"filled\", fillcolor=\"yellow\", fontcolor=\"black\"];\n");
         listarNodos(raiz, graphviz);
         enlazarNodos(raiz,graphviz);
         graphviz.append("}");
@@ -43,15 +43,15 @@ public class Graficador
 
         try 
         {
-            rt.exec( cmd );
+            rt.exec( cmd );            
+            this.autoAbrir(rutaSalidas+separador+nombre+".jpg");                                    
         } catch (IOException ex) 
         {
             Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
             
-    private void listarNodos(Nodo praiz, StringBuffer graphviz)
-    {
+    private void listarNodos(Nodo praiz, StringBuffer graphviz){
         if(praiz.solucion)        
             graphviz.append("node").append(contador).append("[label=\"").append(praiz.calcularNombre()).append("\", fillcolor=\"limegreen\"];\n");        
         else
@@ -62,47 +62,39 @@ public class Graficador
             listarNodos(temp, graphviz);
     }    
     
-    private void enlazarNodos(Nodo praiz, StringBuffer graphviz)
-    {        
+    private void enlazarNodos(Nodo praiz, StringBuffer graphviz){        
         for(Nodo temp:praiz.hijos)
-        {            
-            String relacion="\"node"+praiz.id+"\"->\"node"+temp.id+"\";\n";
-            graphviz.append(relacion);
+        {
+            graphviz.append("\"node").append(praiz.id).append("\"->\"node").append(temp.id).append("\";\n");
             enlazarNodos(temp, graphviz);
         }
     }
     
-    public synchronized void creararchivo(String ruta,String contenido)
-    {   try 
+    public void autoAbrir(String ruta){
+        File f = new File(ruta);
+        if(f.exists())
+        {
+            try 
+            {
+                Desktop.getDesktop().open(f);
+            }catch (IOException ex) 
+            {
+                Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public synchronized void creararchivo(String ruta,String contenido){   try 
         {            
             File archivo = new File(ruta);
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(archivo));
             bw.write(contenido);
             bw.close();
-        } 
-        catch (IOException ex) 
+        }catch (IOException ex) 
         {
             Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }  
+    }
     
-//    public synchronized void creararchivo(String pfichero,String pcontenido)
-//    {   
-//        FileWriter archivo = null;
-//   
-//        try{archivo = new FileWriter(pfichero);} 
-//        catch (IOException ex) 
-//        {Logger.getLogger(Graficador.class.getName()).log(Level.SEVERE, null, ex);}
-//
-//        File a = new File(pfichero);        
-//        if (!a.exists()){return;}   
-//        
-//        try(PrintWriter printwriter = new PrintWriter(archivo)) 
-//        {
-//            printwriter.print(pcontenido);
-//            printwriter.close();
-//        }
-//    }
-     
 }
