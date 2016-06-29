@@ -1,10 +1,8 @@
 package IA;
 
-import java.awt.Image;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,7 +41,7 @@ public class Animar extends Thread
                     siguiente.cuadro.upInicio();
                     actual = siguiente;
                     iterador++;
-                    Animar.sleep(3000); 
+                    Animar.sleep(1000); 
                     continue;
                 }
                         
@@ -59,7 +57,7 @@ public class Animar extends Thread
                     JOptionPane.showMessageDialog(null,"Recorrido Completo","Proyecto IA1",JOptionPane.INFORMATION_MESSAGE);
                     break;
                 }                
-                Animar.sleep(3000); 
+                Animar.sleep(1000); 
             }
             catch (InterruptedException ex) 
             {

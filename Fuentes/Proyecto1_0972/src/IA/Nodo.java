@@ -56,11 +56,12 @@ public class Nodo
     
     private void calcularH_Cuadrado()
     {
+        //this.h = this.cuadro.distancia;
         double ff = Double.parseDouble(String.valueOf(cuadro.data.fin.fila));
         double fc = Double.parseDouble(String.valueOf(cuadro.data.fin.columna));        
         double nf = Double.parseDouble(String.valueOf(cuadro.fila));        
         double nc = Double.parseDouble(String.valueOf(cuadro.columna));
-        this.h = (Math.abs(ff-nf) + Math.abs(fc - nc))*10;
+        this.h = (Math.abs(ff-nf) + Math.abs(fc - nc));
     }
     
     private void calcularH_Diagonal()
@@ -70,6 +71,6 @@ public class Nodo
         double fc = Double.parseDouble(String.valueOf(cuadro.data.fin.columna));        
         double nf = Double.parseDouble(String.valueOf(cuadro.fila));        
         double nc = Double.parseDouble(String.valueOf(cuadro.columna));                
-        this.h = (Math.sqrt(Math.abs(ff-nf) + Math.abs(fc - nc)))*10;
+        this.h = (Math.sqrt(Math.abs(ff-nf) + Math.abs(fc - nc)));
     }                
 }

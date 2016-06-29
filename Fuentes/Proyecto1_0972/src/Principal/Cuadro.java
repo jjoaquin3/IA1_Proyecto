@@ -1,4 +1,4 @@
-package Principal;
+  package Principal;
 
 import IA.Data;
 import java.awt.Image;
@@ -29,13 +29,13 @@ public class Cuadro extends JButton implements ActionListener
         this.id = ttt.tamanio*fff+ccc;        
         this.setFocusPainted(false);        
         this.setText(String.valueOf(id));
-        this.setContentAreaFilled(false);
+        this.setContentAreaFilled(false);        
         this.setMargin(new Insets(1,1,1,1));
         this.setFont(new java.awt.Font("Comic Sans MS", 1, 9));       
         this.setBounds(columna*data.pixeles,fila*data.pixeles,data.pixeles,data.pixeles);        
         this.addActionListener(this);
-        this.updateUI();
-        
+        this.setBorder(null);
+        this.updateUI();        
     }
         
     private void establecerIcono(String ruta)

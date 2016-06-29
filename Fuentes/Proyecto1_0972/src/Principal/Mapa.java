@@ -458,6 +458,12 @@ public class Mapa extends javax.swing.JFrame
         if(data.inicio== null || data.fin==null)
             return;
         
+        for (int i = 0; i < data.tamanio; i++) {
+            for (int j = 0; j < data.tamanio; j++) {
+                data.matriz[i][j].setBorder(null);
+            }
+        }
+        
         Estrella a = new Estrella(data);
         a.algoritmo();      
     }//GEN-LAST:event_bcalcularActionPerformed

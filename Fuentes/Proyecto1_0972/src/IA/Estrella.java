@@ -1,6 +1,7 @@
 package IA;
 
 import Principal.Cuadro;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,6 +58,8 @@ public class Estrella
         Nodo temporal = solucion;           //llenar la lista de soluciones
         while(temporal!=null)
         {
+            //temporal.cuadro.setBorderPainted(true);
+            temporal.cuadro.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 0, 0)));
             temporal.solucion=true;
             data.solucion.addFirst(temporal);
             temporal=temporal.padre;
@@ -144,7 +147,7 @@ public class Estrella
     }    
 
     private ArrayList<Nodo> calcularSucesores(Nodo padre)
-    {
+    {        
         ArrayList<Nodo> sucesores = new ArrayList<>();
         sucesores.add(movArriba(padre));
         sucesores.add(movArribaDerecha(padre));
